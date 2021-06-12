@@ -1,0 +1,45 @@
+.container-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    width: 30rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 91vh;
+}
+
+.btn-primary{
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
+    padding: 1px;
+}
+
+.container-username {
+    min-height: 3.5rem;
+}
+.container-password{
+    min-height: 3.5rem;
+}
+
+p.danger {
+    color: red;
+    font-size: 10px;
+  }
+  
+input.danger {
+    border: 2px solid red;
+}
+input{
+    outline: none;
+}

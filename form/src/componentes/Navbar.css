@@ -1,0 +1,13 @@
+.navbar {
+    border: 1px solid rgb(215, 205, 255);
+    outline: none;
+}
+
+.icono{
+    width: 1.7rem;
+    height: 4vh;
+}
+
+.navbar-brand{
+    margin-left: 1.5rem;
+}
