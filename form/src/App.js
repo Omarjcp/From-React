@@ -1,14 +1,20 @@
 import React from 'react'
-import './App.css';
-import Nav from './componentes/Navbar';
+import Nav from './componentes/Navbar/Navbar';
 import "bootstrap/dist/css/bootstrap.min.css"
-import Form from './componentes/FormLogin';
+import Form from './componentes/Login/FormLogin';
+import { Route } from 'react-router-dom'
+import Home from './componentes/Home/Home';
+import Register from './componentes/Register/Index';
 
 function App() {
   return (
     <>
+    
       <Nav />
-      <Form />
+      <Route exact path='/' render={() => <Home />} />
+      <Route path='/login' render={() => <Form />} />
+      <Route path='/register' render={() => <Register />} />
+      
     </>
   );
 }
