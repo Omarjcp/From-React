@@ -1,101 +1,167 @@
-import React from 'react' 
+import React, { useState } from 'react' 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import styled from 'styled-components'
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 const schema = yup.object().shape({
     nombre: yup.string().required('Este campo es requerido').min(3, 'deben ser mas de 2 caracteres'),
-    telefono: yup.number().positive().integer().required('Este campo es requerido').min(1000000000, 'debe ser al menos 10 numeros'),
+    telefono: yup.string().required("Este campo es requerido")
+    .matches(phoneRegExp, "El numero de telefono debe ser de al menos 8 digitos"),
     email: yup.string().email('Ingrese un correo valido').required('Este campo es requerido'),
     usuario: yup.string().required('Este campo es requerido').min(5, 'deben ser mas de 4 caracteres'),
     apellido: yup.string().required('Este campo es requerido').min(3, 'deben ser mas de 2 caracteres'),
+    contraseña: yup.string().required("Este campo es requerido")
+                .matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+                "La contraseña debe contener al menos 8 dígitos, una letra mayúscula, un numero y un caracter especial."),
+    recontraseña: yup.string().required("Confime su contraseña")
+                    .oneOf([yup.ref('contraseña'), null], "La contraseña no coincide.")
+
   });
 
+
+  const SpanError = styled.span`
+    color: red;
+    font-size: .7rem;
+  `
+
+const Button = styled.button`
+    background: #a7a7a7;
+    color:#7e7e7e;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid #c9c9c9;
+    border-radius: 3px;
+
+    background: ${props => props.primary || "blue"};
+    color: ${props => props.primary || "white"};
+    border: ${props => props.primary || "2px solid #00032e"};
+
+`;
+
+const Div = styled.div`
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: .5rem;
+`
+
+
 const Register = () => {
+
+    // const [input, setInput] = useState({
+    //     nombre: ''
+    //   })
 
     const {register, formState: {errors}, handleSubmit} = useForm({
         resolver: yupResolver(schema)
       });
 
+    //   const handleOnChange = (e) => {
+    //     setInput({
+    //         ...input,
+    //         [e.target.name]: e.target.value
+    //     })
+    // }
 
     const onSubmit = (data) => {
         console.log(data)
     }
 
     return (
-        <div class="mt-4" style={{display:'flex', justifyContent:'center'}}>
+        <div className="mt-4" style={{display:'flex', justifyContent:'center'}}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Nombre</label>
                     <input
                         name="nombre"
+                        // value={input.nombre}
                         placeholder="Nombre"
+                        // onChange={handleOnChange}
                         {...register("nombre")}
                     />
-                    <span style={{color:'red', fontSize:'.7rem'}}>{errors.nombre && errors.nombre.message}</span>
-                </div>
+                    <SpanError>{errors.nombre && errors.nombre.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Apellido</label>
                     <input
                         name="apellido"
                         placeholder="Apellido"
                         {...register("apellido")}
                     />
-                    <span style={{color:'red', fontSize:'.7rem'}}>{errors.apellido && errors.apellido.message}</span>
-                </div>
+                    <SpanError>{errors.apellido && errors.apellido.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Email</label>
                     <input
                         name="email"
                         placeholder="Email"
                         {...register("email")}
                     />
-                    <span style={{color:'red', fontSize:'.7rem'}}>{errors.email && errors.email.message}</span>
-                </div>
+                    <SpanError>{errors.email && errors.email.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Nro. Telefono</label>
                     <input
-                        type="number"
                         name="telefono"
                         placeholder="Ej. (11)12345678, sin ()"
                         {...register("telefono")}
                     />
-                    <span style={{color:'red', fontSize:'.7rem'}}>{errors.telefono && errors.telefono.message}</span>
-                </div>
+                    <SpanError>{errors.telefono && errors.telefono.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Nombre Usuario</label>
                     <input
                         name="usuario"
                         placeholder="usuario123"
                         {...register("usuario")}
                     />
-                    <span style={{color:'red', fontSize:'.7rem'}}>{errors.usuario && errors.usuario.message}</span>
-                </div>
+                    <SpanError>{errors.usuario && errors.usuario.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Contraseña</label>
                     <input
-                        type="number"
+                        type='password'
                         name="contraseña"
                         placeholder="12345omar"
+                        {...register("contraseña")}
                     />
-                </div>
+                    <SpanError>{errors.contraseña && errors.contraseña.message}</SpanError>
+                </Div>
 
-                <div class="mb-4" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                <Div>
                     <label>Repetir contraseña</label>
                     <input
-                        type="number"
+                        type='password'
                         name="recontraseña"
                         placeholder="12345omar"
+                        {...register("recontraseña")}
                     />
-                </div>
+                    <SpanError>{errors.recontraseña && errors.recontraseña.message}</SpanError>
+                </Div>
 
-                <div className="m-3" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-                    <button type="submit" className="btn btn-primary p-3" style={{display:'flex', alignItems:'center'}}>Registrarse</button>
+                <div className="m-3" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Button
+                        type='submit'
+                        primary={
+                            errors.nombre ||
+                            errors.apellido ||
+                            errors.email ||
+                            errors.telefono ||
+                            errors.usuario ||
+                            errors.contraseña ||
+                            errors.recontraseña
+                        }>
+                        Registrarse
+                    </Button>
                 </div>
 
             </form>
