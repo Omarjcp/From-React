@@ -52,20 +52,16 @@ const Div = styled.div`
 
 const Register = () => {
 
-    // const [input, setInput] = useState({
-    //     nombre: ''
-    //   })
+    
 
-    const {register, formState: {errors}, handleSubmit} = useForm({
+    const {register, formState: {errors}, handleSubmit, getValues} = useForm({
         resolver: yupResolver(schema)
       });
 
-    //   const handleOnChange = (e) => {
-    //     setInput({
-    //         ...input,
-    //         [e.target.name]: e.target.value
-    //     })
-    // }
+    const handleOnChange = (e) => {
+        const inputNombre = getValues("nombre")
+        console.log(inputNombre)
+    }
 
     const onSubmit = (data) => {
         console.log(data)
@@ -78,9 +74,8 @@ const Register = () => {
                     <label>Nombre</label>
                     <input
                         name="nombre"
-                        // value={input.nombre}
                         placeholder="Nombre"
-                        // onChange={handleOnChange}
+                        onChange={handleOnChange}
                         {...register("nombre")}
                     />
                     <SpanError>{errors.nombre && errors.nombre.message}</SpanError>
