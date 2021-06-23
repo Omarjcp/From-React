@@ -1,23 +1,7 @@
 import React, { useState } from 'react' 
 import "./FormLogin.css"
+import { validacionLogin } from '../Validaciones/validaciones'
 
-export function validacion(input) {
-    let error = {}
-
-    if(!input.username) {
-        error.username = 'Este campo es requerido'
-    }else if(!/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(input.username)) {
-        error.username = "Correo no valido"
-    }
-
-    if(!input.password) {
-        error.password = 'Este campo es requerido'
-    } else if(!/(?=.*[0-9])/.test(input.password)){
-        error.password = "Password no valido"
-    }
-
-    return error
-}
 
 export default function Form() {
 
@@ -34,7 +18,7 @@ export default function Form() {
               [e.target.name]: e.target.value
           })
 
-          setError(validacion({
+          setError(validacionLogin({
             ...input,
             [e.target.name]: e.target.value
           }))
@@ -74,7 +58,7 @@ export default function Form() {
                         onChange={handleOnChange}
                         />
                         {error.password && (
-              <p className="danger">{error.password}</p>
+              <p className="danger">* {error.password}</p>
             )}
                     </div>
 
