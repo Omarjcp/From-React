@@ -1,9 +1,14 @@
+import { Counter } from "./components/Count";
+import { Usuario } from "./components/Usuario";
+import { TimerFather } from "./components/WorkHooks/TimerFather";
 
 
 function App() {
   return (
     <>
-      <h1>React + TypeScripts veiw commits</h1>
+      <Counter />
+      <Usuario />
+      <TimerFather />
     </>
   );
 }
