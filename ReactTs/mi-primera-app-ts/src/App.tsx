@@ -3,7 +3,7 @@
 function App() {
   return (
     <>
-      <h1>React + TypeScripts</h1>
+      <h1>React + TypeScripts veiw commits</h1>
     </>
   );
 }
